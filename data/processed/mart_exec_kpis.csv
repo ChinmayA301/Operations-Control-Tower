@@ -1,0 +1,12 @@
+kpi,value
+total_orders,98666.0
+delivered_orders,96470.0
+total_revenue_brl,13591643.700012216
+total_freight_brl,2251909.540000153
+freight_to_revenue,0.1656833852993166
+on_time_rate,0.9322690992018244
+late_rate,0.06773090079817559
+avg_delay_days_late,10.620140801958984
+cancel_rate,0.0046723288670869395
+bad_review_rate,0.1462813937932013
+revenue_exposed_to_late_brl,985924.339999999

@@ -1,0 +1,15 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Raw data (62 MB) — regenerate with: python src/download_data.py
+data/raw/
+
+# Regenerable build artifacts — rebuild with: python src/run_pipeline.py
+data/processed/*.duckdb
+data/processed/fact_orders.csv
+
+# OS
+.DS_Store
