@@ -71,6 +71,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python src/download_data.py     # fetch raw Olist CSVs (62 MB) into data/raw/
 python src/run_pipeline.py      # run SQL star schema + marts -> data/processed/*.csv
+python src/validate_data.py     # Great Expectations data-quality gate -> docs/data_quality_report.md
 python src/make_figures.py      # regenerate the figures in this README
 ```
 SQL is plain DuckDB and also runs standalone: `duckdb < sql/01_schema.sql` (from repo root). EDA walkthrough → [`notebooks/01_eda.ipynb`](notebooks/01_eda.ipynb).
@@ -85,6 +86,9 @@ docs/       data_dictionary · kpi_dictionary · executive_memo · case_study
 assets/     schema_diagram.md · figures/
 notebooks/  01_eda.ipynb
 ```
+
+## Data quality
+A **Great Expectations** suite ([`src/validate_data.py`](src/validate_data.py)) gates the data before it reaches the dashboard — domain guardrails like unique order IDs, non-negative revenue/freight, review scores in 1–5, and sane delay ranges. Latest run: **10/10 expectations pass** ([`docs/data_quality_report.md`](docs/data_quality_report.md)). Dataset provenance & limitations: [`docs/datasheet.md`](docs/datasheet.md).
 
 ## Limitations (read before reusing conclusions)
 - **Associations, not causation.** Late↔bad-review is correlational; quantifying the causal retention effect needs an experiment.
