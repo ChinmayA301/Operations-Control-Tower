@@ -1,0 +1,2 @@
+total_orders,delivered_orders,total_revenue_brl,total_freight_brl,freight_to_revenue,on_time_rate,late_rate,avg_delay_days_late,cancel_rate,bad_review_rate,revenue_exposed_to_late_brl
+98666.0,96470.0,13591643.700012172,2251909.5400001863,0.16568338529931959,0.9322690992018244,0.06773090079817559,10.620140801958984,0.0046723288670869395,0.1462813937932013,985924.3399999907

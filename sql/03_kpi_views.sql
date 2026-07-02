@@ -23,6 +23,23 @@ SELECT 'bad_review_rate',      (SELECT AVG(CASE WHEN is_bad_review THEN 1.0 ELSE
 -- Revenue exposed to late delivery = revenue of delivered-late orders (factual exposure, not a loss claim)
 SELECT 'revenue_exposed_to_late_brl', (SELECT SUM(revenue) FROM d WHERE is_late);
 
+-- Wide (one-row) version of the exec KPIs — each KPI is its own column, which
+-- is what Looker Studio scorecards expect (drop a field, no filter needed).
+CREATE OR REPLACE VIEW mart_exec_kpis_wide AS
+SELECT
+    MAX(CASE WHEN kpi = 'total_orders'                THEN value END) AS total_orders,
+    MAX(CASE WHEN kpi = 'delivered_orders'            THEN value END) AS delivered_orders,
+    MAX(CASE WHEN kpi = 'total_revenue_brl'           THEN value END) AS total_revenue_brl,
+    MAX(CASE WHEN kpi = 'total_freight_brl'           THEN value END) AS total_freight_brl,
+    MAX(CASE WHEN kpi = 'freight_to_revenue'          THEN value END) AS freight_to_revenue,
+    MAX(CASE WHEN kpi = 'on_time_rate'                THEN value END) AS on_time_rate,
+    MAX(CASE WHEN kpi = 'late_rate'                   THEN value END) AS late_rate,
+    MAX(CASE WHEN kpi = 'avg_delay_days_late'         THEN value END) AS avg_delay_days_late,
+    MAX(CASE WHEN kpi = 'cancel_rate'                 THEN value END) AS cancel_rate,
+    MAX(CASE WHEN kpi = 'bad_review_rate'             THEN value END) AS bad_review_rate,
+    MAX(CASE WHEN kpi = 'revenue_exposed_to_late_brl' THEN value END) AS revenue_exposed_to_late_brl
+FROM mart_exec_kpis;
+
 -- =====================================================================
 -- MART: monthly trend
 -- =====================================================================

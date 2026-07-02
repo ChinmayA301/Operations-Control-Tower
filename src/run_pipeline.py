@@ -23,6 +23,7 @@ PROC = ROOT / "data" / "processed"
 DOCS = ROOT / "docs"
 MARTS = [
     "mart_exec_kpis",
+    "mart_exec_kpis_wide",
     "mart_monthly",
     "mart_region",
     "mart_product_risk",

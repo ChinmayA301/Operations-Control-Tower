@@ -7,11 +7,18 @@ into `dashboard/screenshots/` and link the live report in the README.
 
 ## Connect the data
 1. Run the pipeline → `python src/run_pipeline.py` produces the marts.
-2. In Looker Studio → **Create → Data source → CSV upload** (or upload the marts to
-   Google Sheets and use the Sheets connector) for each of:
-   `mart_exec_kpis`, `mart_monthly`, `mart_region`, `mart_product_risk`, `mart_supplier_scorecard`.
+2. Create **one separate data source per CSV** (each mart has its own schema):
+   `mart_exec_kpis_wide`, `mart_monthly`, `mart_region`, `mart_product_risk`, `mart_supplier_scorecard`.
+   > ⚠️ **Gotcha:** a Looker Studio *File Upload* data source holds **one fixed schema** — uploading
+   > a second, differently-shaped CSV into it fails with *"Invalid/Expected column header name(s)"*
+   > (it tries to *append*). Always start a **new** File Upload (or Google Sheet) per mart. The
+   > Google Sheets connector is more robust and refreshable — recommended.
 3. Set types: rates as **Percent**, revenue/freight as **Number (R$)**, `order_month` as Text
    (sortable), `risk_score` as Number.
+
+> **Scorecards use `mart_exec_kpis_wide`** — a one-row table with each KPI as its own column,
+> so a scorecard is just "drop the field" (no per-metric filter). The tall `mart_exec_kpis`
+> (`kpi`,`value`) remains for anyone who prefers a filtered/pivoted setup.
 
 ## Design system
 - **Layout:** 1280×720 pages, 12-column grid, 16px gutters.
@@ -21,7 +28,7 @@ into `dashboard/screenshots/` and link the live report in the README.
 ---
 
 ## Page 1 — Executive Overview  *(“How is the operation doing?”)*
-Scorecards (from `mart_exec_kpis`): Total Orders · Revenue (R$) · Freight (R$) ·
+Scorecards (from `mart_exec_kpis_wide`, one field each): Total Orders · Revenue (R$) · Freight (R$) ·
 **On-time Rate** · Avg Delay (late) · Bad-review Rate · Cancel Rate · **Revenue Exposed to Late Delivery**.
 ```
 ┌ Total Orders ┐┌ Revenue ┐┌ On-time % ┐┌ Bad-review % ┐
